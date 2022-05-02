@@ -1,7 +1,6 @@
-﻿using System;
-using System.Net;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
+using VacationRental.Api.DTOs;
 using VacationRental.Api.Models;
 using Xunit;
 
@@ -20,7 +19,7 @@ namespace VacationRental.Api.Tests
         [Fact]
         public async Task GivenCompleteRequest_WhenPostRental_ThenAGetReturnsTheCreatedRental()
         {
-            var request = new RentalBindingModel
+            var request = new RentalDto
             {
                 Units = 25
             };
@@ -36,7 +35,7 @@ namespace VacationRental.Api.Tests
             {
                 Assert.True(getResponse.IsSuccessStatusCode);
 
-                var getResult = await getResponse.Content.ReadAsAsync<RentalViewModel>();
+                var getResult = await getResponse.Content.ReadAsAsync<Rental>();
                 Assert.Equal(request.Units, getResult.Units);
             }
         }
