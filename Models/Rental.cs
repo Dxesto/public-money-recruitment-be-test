@@ -1,6 +1,8 @@
-﻿namespace VacationRental.Api.Models
+﻿using Models.Interfaces;
+
+namespace Models
 {
-    public class Rental
+    public class Rental : IEntity
     {
         public int Id { get; set; }
 

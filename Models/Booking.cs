@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Models.Interfaces;
+using System;
 
-namespace VacationRental.Api.DTOs
+namespace Models
 {
-    public class BookingDto
+    public class Booking : IEntity
     {
+        public int Id { get; set; }
+
         public int RentalId { get; set; }
 
         public DateTime Start { get; set; }

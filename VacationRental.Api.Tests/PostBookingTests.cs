@@ -1,7 +1,8 @@
-﻿using System;
+﻿using DTO;
+using Models;
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using VacationRental.Api.DTOs;
 using VacationRental.Api.Models;
 using Xunit;
 

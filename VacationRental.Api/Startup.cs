@@ -1,11 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using AutoMapper;
+using BL;
+using BL.Interfaces;
+using DAL;
+using DAL.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Models;
 using Swashbuckle.AspNetCore.Swagger;
-using VacationRental.Api.Models;
+using System.Collections.Generic;
 
 namespace VacationRental.Api
 {
@@ -25,6 +30,14 @@ namespace VacationRental.Api
 
             services.AddSwaggerGen(opts => opts.SwaggerDoc("v1", new Info { Title = "Vacation rental information", Version = "v1" }));
 
+            services.AddAutoMapper(typeof(Startup));
+
+            services.AddScoped<IRentalBl, RentalBl>();
+            services.AddScoped<IBookingBl, BookingBl>();
+            services.AddScoped<ICalendarBl, CalendarBl>();
+
+            services.AddSingleton<ApplicationContext>();
+            services.AddScoped<UnitOfWork>();
             services.AddSingleton<IDictionary<int, Rental>>(new Dictionary<int, Rental>());
             services.AddSingleton<IDictionary<int, Booking>>(new Dictionary<int, Booking>());
         }

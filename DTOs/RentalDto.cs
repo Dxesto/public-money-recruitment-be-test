@@ -1,4 +1,4 @@
-﻿namespace VacationRental.Api.DTOs
+﻿namespace DTO
 {
     public class RentalDto
     {

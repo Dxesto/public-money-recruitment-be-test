@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace VacationRental.Api.Models
+namespace Models
 {
     public class CalendarDate
     {
