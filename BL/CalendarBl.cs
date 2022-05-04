@@ -38,7 +38,7 @@ namespace BL
                 Func<Booking, bool> filter = booking => booking.RentalId == rentalId
                         && booking.Start <= date.Date && booking.Start.AddDays(booking.Nights) > date.Date;
 
-                var bookings = _unitOfWork.BookingRepository.Get(filter);
+                IList<Booking> bookings = _unitOfWork.BookingRepository.Get(filter);
 
                 var calendarBookings = bookings.Select(x => new CalendarBooking { Id = x.Id });
 

@@ -24,8 +24,6 @@ namespace BL
 
         public int Create(Booking booking)
         {
-            if (booking.Nights <= 0)
-                throw new ApplicationException("Nigts must be positive");
             if (!_unitOfWork.RentalRepository.Any(booking.RentalId))
                 throw new ApplicationException("Rental not found");
 
