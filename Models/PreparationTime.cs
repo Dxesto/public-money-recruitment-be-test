@@ -1,9 +1,7 @@
 ﻿namespace Models
 {
-    public class CalendarBooking
+    public class PreparationTime
     {
-        public int Id { get; set; }
-
         public int Unit { get; set; }
     }
 }

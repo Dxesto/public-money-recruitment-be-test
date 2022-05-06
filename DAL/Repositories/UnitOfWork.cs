@@ -10,7 +10,6 @@ namespace DAL.Repositories
         private IInMemoryRepository<Booking> _bookingRepository;
         private IInMemoryRepository<Rental> _rentalRepository;
 
-
         public UnitOfWork(ApplicationContext applicationContext)
         {
             _applicationContext = applicationContext;
