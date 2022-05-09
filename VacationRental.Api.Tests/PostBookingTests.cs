@@ -1,9 +1,8 @@
-﻿using DTO;
+﻿using DTOs;
 using Models;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using VacationRental.Api.Models;
 using Xunit;
 
 namespace VacationRental.Api.Tests
@@ -26,11 +25,11 @@ namespace VacationRental.Api.Tests
                 Units = 4
             };
 
-            ResourceIdViewModel postRentalResult;
+            ResourceIdDto postRentalResult;
             using (var postRentalResponse = await _client.PostAsJsonAsync($"/api/v1/rentals", postRentalRequest))
             {
                 Assert.True(postRentalResponse.IsSuccessStatusCode);
-                postRentalResult = await postRentalResponse.Content.ReadAsAsync<ResourceIdViewModel>();
+                postRentalResult = await postRentalResponse.Content.ReadAsAsync<ResourceIdDto>();
             }
 
             var postBookingRequest = new BookingDto
@@ -40,11 +39,11 @@ namespace VacationRental.Api.Tests
                  Start = new DateTime(2001, 01, 01)
             };
 
-            ResourceIdViewModel postBookingResult;
+            ResourceIdDto postBookingResult;
             using (var postBookingResponse = await _client.PostAsJsonAsync($"/api/v1/bookings", postBookingRequest))
             {
                 Assert.True(postBookingResponse.IsSuccessStatusCode);
-                postBookingResult = await postBookingResponse.Content.ReadAsAsync<ResourceIdViewModel>();
+                postBookingResult = await postBookingResponse.Content.ReadAsAsync<ResourceIdDto>();
             }
 
             using (var getBookingResponse = await _client.GetAsync($"/api/v1/bookings/{postBookingResult.Id}"))
@@ -66,11 +65,11 @@ namespace VacationRental.Api.Tests
                 Units = 1
             };
 
-            ResourceIdViewModel postRentalResult;
+            ResourceIdDto postRentalResult;
             using (var postRentalResponse = await _client.PostAsJsonAsync($"/api/v1/rentals", postRentalRequest))
             {
                 Assert.True(postRentalResponse.IsSuccessStatusCode);
-                postRentalResult = await postRentalResponse.Content.ReadAsAsync<ResourceIdViewModel>();
+                postRentalResult = await postRentalResponse.Content.ReadAsAsync<ResourceIdDto>();
             }
 
             var postBooking1Request = new BookingDto

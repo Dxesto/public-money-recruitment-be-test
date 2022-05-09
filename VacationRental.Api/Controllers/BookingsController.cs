@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using BL.Interfaces;
-using DTO;
+using DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Models;
-using VacationRental.Api.Models;
 
 namespace VacationRental.Api.Controllers
 {
@@ -28,13 +27,13 @@ namespace VacationRental.Api.Controllers
         }
 
         [HttpPost]
-        public ResourceIdViewModel Post([FromBody] BookingDto bookingDto)
+        public ResourceIdDto Post([FromBody] BookingDto bookingDto)
         {
             var booking = _mapper.Map<Booking>(bookingDto);
 
             var id = _bookingBl.Create(booking);
 
-            return new ResourceIdViewModel { Id = id };
+            return new ResourceIdDto { Id = id };
         }
     }
 }

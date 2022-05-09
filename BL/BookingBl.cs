@@ -1,4 +1,5 @@
 ﻿using BL.Interfaces;
+using Common;
 using DAL.Repositories;
 using Models;
 using System;
@@ -19,7 +20,7 @@ namespace BL
         public Booking GetById(int id)
         {
             if (!_unitOfWork.BookingRepository.Any(id))
-                throw new ApplicationException("Booking not found");
+                throw new ApplicationException(ResponseMessages.EntityNotFound(ResourceTypes.Booking));
 
             return _unitOfWork.BookingRepository.GetById(id);
         }
@@ -27,7 +28,7 @@ namespace BL
         public int Create(Booking booking)
         {
             if (!_unitOfWork.RentalRepository.Any(booking.RentalId))
-                throw new ApplicationException("Rental not found");
+                throw new ApplicationException(ResponseMessages.EntityNotFound(ResourceTypes.Rental));
 
             var rental = _unitOfWork.RentalRepository.GetById(booking.RentalId);
 
@@ -65,7 +66,7 @@ namespace BL
                 }
             }
 
-            throw new ApplicationException("Not available");
+            throw new ApplicationException(ResponseMessages.NotAvailable);
         }
     }
 }

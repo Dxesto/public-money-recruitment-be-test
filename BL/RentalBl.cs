@@ -1,4 +1,5 @@
 ﻿using BL.Interfaces;
+using Common;
 using DAL.Repositories;
 using Models;
 using System;
@@ -17,7 +18,7 @@ namespace BL
         public Rental GetById(int id)
         {
             if (!_unitOfWork.RentalRepository.Any(id))
-                throw new ApplicationException("Rental not found");
+                throw new ApplicationException(ResponseMessages.EntityNotFound(ResourceTypes.Rental));
 
             return _unitOfWork.RentalRepository.GetById(id);
         }

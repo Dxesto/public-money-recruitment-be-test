@@ -5,7 +5,7 @@ namespace DAL.Repositories
 {
     public class UnitOfWork
     {
-        private static ApplicationContext _applicationContext;
+        private ApplicationContext _applicationContext;
 
         private IInMemoryRepository<Booking> _bookingRepository;
         private IInMemoryRepository<Rental> _rentalRepository;

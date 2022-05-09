@@ -30,7 +30,7 @@ namespace VacationRental.Api
 
             services.AddSwaggerGen(opts => opts.SwaggerDoc("v1", new Info { Title = "Vacation rental information", Version = "v1" }));
 
-            services.AddAutoMapper(typeof(Startup));
+            services.AddAutoMapper(typeof(Common.ResourceTypes));
 
             services.AddScoped<IRentalBl, RentalBl>();
             services.AddScoped<IBookingBl, BookingBl>();
@@ -38,8 +38,6 @@ namespace VacationRental.Api
 
             services.AddSingleton<ApplicationContext>();
             services.AddScoped<UnitOfWork>();
-            services.AddSingleton<IDictionary<int, Rental>>(new Dictionary<int, Rental>());
-            services.AddSingleton<IDictionary<int, Booking>>(new Dictionary<int, Booking>());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

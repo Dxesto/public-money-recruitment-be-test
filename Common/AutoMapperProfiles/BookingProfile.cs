@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
-using DTO;
+using DTOs;
 using Models;
 
-namespace VacationRental.Api.AutoMapperProfiles
+namespace Common.AutoMapperProfiles
 {
     public class BookingProfile : Profile
     {
         public BookingProfile()
         {
-            CreateMap<BookingDto, Booking>();
+            CreateMap<BookingDto, Booking>().ReverseMap();
         }
     }
 }

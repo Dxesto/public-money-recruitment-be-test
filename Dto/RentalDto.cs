@@ -1,4 +1,4 @@
-﻿namespace DTO
+﻿namespace DTOs
 {
     public class RentalDto
     {

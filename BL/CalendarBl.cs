@@ -1,4 +1,5 @@
 ﻿using BL.Interfaces;
+using Common;
 using DAL.Repositories;
 using Models;
 using System;
@@ -19,7 +20,7 @@ namespace BL
         public Calendar Get(int rentalId, DateTime start, int nights)
         {
             if (!_unitOfWork.RentalRepository.Any(rentalId))
-                throw new ApplicationException("Rental not found");
+                throw new ApplicationException(ResponseMessages.EntityNotFound(ResourceTypes.Rental));
 
             var rental = _unitOfWork.RentalRepository.GetById(rentalId);
 
@@ -44,15 +45,9 @@ namespace BL
             {
                 var date = start.Date.AddDays(i);
 
-                Func<Booking, bool> dayOverlappedBookingsFilter = booking => booking.RentalId == rentalId
-                    && booking.Start.Date <= date.Date && booking.Start.AddDays(booking.Nights).Date > date.Date;
+                var dayOverlappedBookings = GetOverlappedBookings(date, rentalId, overlappedBookings);
 
-                IEnumerable<Booking> dayOverlappedBookings = overlappedBookings.Where(dayOverlappedBookingsFilter).ToList();
-
-                Func<Booking, bool> preparationTimeBookingsFilter = booking => booking.RentalId == rentalId
-                   && booking.Start.AddDays(booking.Nights).Date <= date.Date && booking.Start.AddDays(booking.Nights + booking.PreparationTimes.Count).Date > date.Date;
-
-                IEnumerable<Booking> preparationTimeBookings = overlappedBookings.Where(preparationTimeBookingsFilter);
+                var dayOverlappedPreparationTimeBookings = GetOverlappedPreparationTimes(date, rentalId, overlappedBookings);
 
                 var calendarDate = new CalendarDate
                 {
@@ -60,12 +55,32 @@ namespace BL
                 };
 
                 calendarDate.Bookings.AddRange(dayOverlappedBookings.Select(x => new CalendarBooking { Id = x.Id, Unit = x.Unit }));
-                calendarDate.PreparationTimes.AddRange(preparationTimeBookings.Select(x => new PreparationTime { Unit = x.Unit }));
+                calendarDate.PreparationTimes.AddRange(dayOverlappedPreparationTimeBookings.Select(x => new PreparationTime { Unit = x.Unit }));
 
                 result.Dates.Add(calendarDate);
             }
 
             return result;
+        }
+
+        private IList<Booking> GetOverlappedBookings(DateTime date, int rentalId , IList<Booking> overlappedBookings)
+        {
+            Func<Booking, bool> dayOverlappedBookingsFilter = booking => booking.RentalId == rentalId
+                && booking.Start.Date <= date.Date && booking.Start.AddDays(booking.Nights).Date > date.Date;
+
+            IEnumerable<Booking> dayOverlappedBookings = overlappedBookings.Where(dayOverlappedBookingsFilter).ToList();
+
+            return dayOverlappedBookings.ToList();
+        }
+
+        private IList<Booking> GetOverlappedPreparationTimes(DateTime date, int rentalId, IList<Booking> overlappedBookings)
+        {
+            Func<Booking, bool> preparationTimeBookingsFilter = booking => booking.RentalId == rentalId
+                && booking.Start.AddDays(booking.Nights).Date <= date.Date && booking.Start.AddDays(booking.Nights + booking.PreparationTimes.Count).Date > date.Date;
+
+            IEnumerable<Booking> preparationTimeBookings = overlappedBookings.Where(preparationTimeBookingsFilter);
+
+            return preparationTimeBookings.ToList();
         }
     }
 }

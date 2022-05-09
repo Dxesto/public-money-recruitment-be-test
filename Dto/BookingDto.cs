@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace DTO
+namespace DTOs
 {
     public class BookingDto : IValidatableObject
     {

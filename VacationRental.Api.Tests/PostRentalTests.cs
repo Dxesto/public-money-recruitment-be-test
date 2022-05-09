@@ -1,8 +1,7 @@
-﻿using DTO;
+﻿using DTOs;
 using Models;
 using System.Net.Http;
 using System.Threading.Tasks;
-using VacationRental.Api.Models;
 using Xunit;
 
 namespace VacationRental.Api.Tests
@@ -25,11 +24,11 @@ namespace VacationRental.Api.Tests
                 Units = 25
             };
 
-            ResourceIdViewModel postResult;
+            ResourceIdDto postResult;
             using (var postResponse = await _client.PostAsJsonAsync($"/api/v1/rentals", request))
             {
                 Assert.True(postResponse.IsSuccessStatusCode);
-                postResult = await postResponse.Content.ReadAsAsync<ResourceIdViewModel>();
+                postResult = await postResponse.Content.ReadAsAsync<ResourceIdDto>();
             }
 
             using (var getResponse = await _client.GetAsync($"/api/v1/rentals/{postResult.Id}"))
